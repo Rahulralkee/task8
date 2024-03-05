@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To-Do List with AngularJS</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color:yellow;
+    color:black;
+  }
+
+  .container {
+    max-width: 400px;
+    margin: 50px auto;
+  }
+
+  .task {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    animation: fade-in 0.5s ease;
+  }
+
+  .task.ng-enter {
+    animation: fade-in 0.5s ease;
+  }
+
+  .task.ng-leave {
+    animation: fade-out 0.5s ease;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+<body ng-controller="TodoController">
+
+<div class="container">
+  <h2>add your habbits</h2>
+  <input type="text" ng-model="newTask" placeholder="Add a new task">
+  <button ng-click="addTask()">Add Task</button>
+  <div ng-repeat="task in tasks" class="task">
+    {{ task }}
+    <button ng-click="removeTask($index)">Remove</button>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script>
+  var app = angular.module('todoApp', []);
+
+  app.controller('TodoController', function($scope) {
+    $scope.tasks = [];
+
+    $scope.addTask = function() {
+      if ($scope.newTask) {
+        $scope.tasks.push($scope.newTask);
+        $scope.newTask = '';
+      }
+    };
+
+    $scope.removeTask = function(index) {
+      $scope.tasks.splice(index, 1);
+    };
+  });
+</script>
+
+</body>
+</html>
